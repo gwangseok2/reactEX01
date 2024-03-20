@@ -1,0 +1,10 @@
+body {
+  font: 14px "Noto Sans KR", sans-serif;
+  margin: 20px;
+}
+
+ol,
+ul {
+  list-style: none;
+  padding-left: 30px;
+}
