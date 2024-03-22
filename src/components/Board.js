@@ -3,8 +3,8 @@ import Square from "./Square";
 import "./Board.css";
 function Board() {
   // 컴포넌트를 리턴해서 이용하는 것도 가능.
-  const renderSquare = (index) => {
-    return <Square />;
+  const renderSquare = (idx) => {
+    return <Square value={idx} />;
   };
   return (
     <div className="board">
