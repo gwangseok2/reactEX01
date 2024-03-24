@@ -3,3 +3,7 @@
 .game-borad {
   display: flex;
 }
+
+.board-row {
+  display: flex;
+}

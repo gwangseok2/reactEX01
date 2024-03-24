@@ -1,7 +1,11 @@
-import React from "react";
 import "./Square.css";
-const Square = ({ value }) => {
-  return <button className="square">{value}</button>;
+const Square = ({ value, event }) => {
+  console.log(value, "자식컴포넌트");
+  return (
+    <button type="button" className="square" onClick={event}>
+      {value}
+    </button>
+  );
 };
 
 export default Square;
