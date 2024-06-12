@@ -1,5 +1,12 @@
 import React from "react";
 
-export const history = () => {
-  return <div>history Components</div>;
+const History = ({ gameHistory }) => {
+  return (
+    <div>
+      <h2>history Components</h2>
+      <ul>{gameHistory.map((el) => el)}</ul>
+    </div>
+  );
 };
+
+export default History;

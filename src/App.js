@@ -1,6 +1,7 @@
 import "./App.css";
 import Board from "./components/Board";
 import React, { useState } from "react";
+import History from "./components/History";
 
 function App() {
   const [history, setHistory] = useState([{ squares: Array(9).fill(null) }]);
@@ -57,6 +58,15 @@ function App() {
     setxIsNext((xIsNext) => !xIsNext);
   };
 
+  const gameHistory = history.map((el, idx) => {
+    const desc = idx ? `Go to move #${idx}` : "Go to game start";
+    return (
+      <li>
+        <button>{desc}</button>
+      </li>
+    );
+  });
+
   return (
     <div className="game">
       <div className="game-board">
@@ -64,6 +74,7 @@ function App() {
       </div>
       <div className="game-info">
         <div className="status">{status}</div>
+        <History gameHistory={gameHistory} />
       </div>
     </div>
   );
