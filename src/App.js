@@ -61,7 +61,7 @@ function App() {
   const gameHistory = history.map((el, idx) => {
     const desc = idx ? `Go to move #${idx}` : "Go to game start";
     return (
-      <li>
+      <li key={idx}>
         <button>{desc}</button>
       </li>
     );
