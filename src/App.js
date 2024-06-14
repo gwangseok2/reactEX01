@@ -58,10 +58,18 @@ function App() {
     setxIsNext((xIsNext) => !xIsNext);
   };
 
+  const handleClick = (idx) => {
+    console.log(history, "--history", idx % 2 === 0);
+    setxIsNext((xIsNext) =>
+      idx % 2 === 0 ? (xIsNext = true) : (xIsNext = false)
+    );
+    setHistory([...history, { squares: history[idx].squares }]);
+  };
+
   const gameHistory = history.map((el, idx) => {
     const desc = idx ? `Go to move #${idx}` : "Go to game start";
     return (
-      <li key={idx}>
+      <li key={idx} onClick={() => handleClick(idx)}>
         <button>{desc}</button>
       </li>
     );
