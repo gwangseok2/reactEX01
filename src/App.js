@@ -58,18 +58,26 @@ function App() {
     setxIsNext((xIsNext) => !xIsNext);
   };
 
-  const handleClick = (idx) => {
-    console.log(history, "--history", idx % 2 === 0);
+  // 과거 게임 이력으로 이동
+  const moveToHistory = (idx) => {
+    console.log(idx, "stepnunmber");
+    const newHistory = history.slice(0, idx + 1);
+    console.log(newHistory, "newHistory");
+    const newCurrentArray = newHistory[newHistory.length - 1];
+    const newSquare = newCurrentArray.squares.slice();
+
     setxIsNext((xIsNext) =>
       idx % 2 === 0 ? (xIsNext = true) : (xIsNext = false)
     );
-    setHistory([...history, { squares: history[idx].squares }]);
+    setHistory([...newHistory, { squares: newSquare }]);
+    console.log(history, "--- click1");
   };
 
   const gameHistory = history.map((el, idx) => {
+    console.log(history, "---history array2");
     const desc = idx ? `Go to move #${idx}` : "Go to game start";
     return (
-      <li key={idx} onClick={() => handleClick(idx)}>
+      <li key={idx} onClick={() => moveToHistory(idx)}>
         <button>{desc}</button>
       </li>
     );
