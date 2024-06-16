@@ -8,6 +8,8 @@ function App() {
 
   const [xIsNext, setxIsNext] = useState(true);
 
+  const [stepNumber, setStepNumber] = useState(0);
+
   // 승자체크
   const gameWinnerCheck = (square) => {
     const lines = [
@@ -31,11 +33,10 @@ function App() {
     return null;
   };
 
-  const current = history[history.length - 1];
+  const current = history[stepNumber];
   const winner = gameWinnerCheck(current.squares);
 
   // player turn text
-  console.log(winner, "winner");
   const status = winner
     ? `Winner: ${winner}`
     : `Next player: ${xIsNext ? "X" : "O"}`;
@@ -45,36 +46,24 @@ function App() {
     복사본을 만들고 복사본을 변경 후
     변경본을 셋 데이터로 다시 할당
   */
-  const changeValue = (idx) => {
-    const newArray = current.squares.slice();
+  const boardClick = (idx) => {
+    const newHistory = history.slice(0, stepNumber + 1);
+    const newCurrent = newHistory[newHistory.length - 1];
+    const newSquares = newCurrent.squares.slice();
 
     // 중복클릭방지
-    if (gameWinnerCheck(newArray) || newArray[idx]) {
+    if (gameWinnerCheck(newHistory) || newSquares[idx]) {
       return;
     }
 
-    newArray[idx] = xIsNext ? "X" : "O";
-    setHistory([...history, { squares: newArray }]);
+    newSquares[idx] = xIsNext ? "X" : "O";
+    setHistory([...newHistory, { squares: newSquares }]);
     setxIsNext((xIsNext) => !xIsNext);
+    setStepNumber(newHistory.length);
   };
 
-  // 과거 게임 이력으로 이동
-  const moveToHistory = (idx) => {
-    console.log(idx, "stepnunmber");
-    const newHistory = history.slice(0, idx + 1);
-    console.log(newHistory, "newHistory");
-    const newCurrentArray = newHistory[newHistory.length - 1];
-    const newSquare = newCurrentArray.squares.slice();
-
-    setxIsNext((xIsNext) =>
-      idx % 2 === 0 ? (xIsNext = true) : (xIsNext = false)
-    );
-    setHistory([...newHistory, { squares: newSquare }]);
-    console.log(history, "--- click1");
-  };
-
+  // 게임 히스토리 랜더
   const gameHistory = history.map((el, idx) => {
-    console.log(history, "---history array2");
     const desc = idx ? `Go to move #${idx}` : "Go to game start";
     return (
       <li key={idx} onClick={() => moveToHistory(idx)}>
@@ -83,10 +72,15 @@ function App() {
     );
   });
 
+  const moveToHistory = (idx) => {
+    setStepNumber(idx);
+    setxIsNext(idx % 2 === 0);
+  };
+
   return (
     <div className="game">
       <div className="game-board">
-        <Board squares={current.squares} onClick={(idx) => changeValue(idx)} />
+        <Board squares={current.squares} onClick={(idx) => boardClick(idx)} />
       </div>
       <div className="game-info">
         <div className="status">{status}</div>
