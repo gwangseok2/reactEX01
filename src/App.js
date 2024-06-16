@@ -52,7 +52,7 @@ function App() {
     const newSquares = newCurrent.squares.slice();
 
     // 중복클릭방지
-    if (gameWinnerCheck(newHistory) || newSquares[idx]) {
+    if (gameWinnerCheck(newSquares) || newSquares[idx]) {
       return;
     }
 
@@ -67,7 +67,7 @@ function App() {
     const desc = idx ? `Go to move #${idx}` : "Go to game start";
     return (
       <li key={idx} onClick={() => moveToHistory(idx)}>
-        <button>{desc}</button>
+        <button className="move-btn">{desc}</button>
       </li>
     );
   });
